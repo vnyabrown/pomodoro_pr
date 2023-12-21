@@ -1,6 +1,6 @@
 import datetime
 import sqlite3
-from flask import Flask, render_template, url_for, current_app, g
+from flask import Flask, render_template, url_for, current_app, g, request
 
 pomodoro = Flask(__name__)
 
@@ -21,18 +21,29 @@ def close_db():
     if db is not None:
         db.close()
 
-def init_db():
-    db = get_db()
+class task:
+    def init_db():
+        db = get_db()
+        id = db.column(db.Integer, primary_key=True)
+        content = db.column(db.String(200), nullable=False)
+        completed = db.column(db.Integer, default = 0)
+        date_created = db.column(db.DateTime, default=datetime.utcnow)
 
-    with current_app.open_recourse('testdb.sql') as f:
-        db.executescript(f.read().decode('utf8'))
+        with current_app.open_recourse('testdb.sql') as f:
+            db.executescript(f.read().decode('utf8'))
 
-    def __repr__(self):
-        return '<Task %r' % self.id
+        def __repr__(self):
+            return '<Task %r' % self.id
 
-@pomodoro.route('/')
+
+@pomodoro.route('/', methods=['POST', 'GET'])
 def index():
-    return render_template('index.html')
+    if request.method == 'POST':
+        task_content = request.form['content']
+
+    else:
+        return render_template('index.html')
+    
 
 if __name__ == "__main__":
     pomodoro.run(debug=True)
