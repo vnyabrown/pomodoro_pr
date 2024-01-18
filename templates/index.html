@@ -23,12 +23,20 @@
         <br/>
     </div> <br/> <!--end of tasks-->
     
-    <div class ="buttons">
-        <form action="/" method="POST">
-            <input type="text" name="content">
-            <p> <textarea name="description" rows="5" cols="14">What is your task?</textarea> </p>
-            <input type="submit" value="Add Task">
+    <div class ="add_task">
+        <br/>
+        <form method="post">
+            <textarea value = 'title' name="title" rows="1" cols="14"> {{ request.form['title'] }} </textarea>
+            <textarea value = 'content' name="content" rows="5" cols="14"> {{ request.form['content'] }} </textarea>
+            <select name="task_time">
+                <option value='10'>10</option>
+                <option value='20'>20</option>
+                <option value='25'>25</option>
+                <option value='30'>30</option>
+            </select>
+            <button type="submit">Add Task</button>
         </form>
+        <br/>
     </div> <!--end of buttons-->
 
 </div>

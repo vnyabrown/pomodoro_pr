@@ -1,8 +1,9 @@
 import datetime
 import sqlite3
-from flask import Flask, render_template, url_for, current_app, g, request
+from flask import Flask, render_template, url_for, current_app, g, request, flash, redirect
 
 pomodoro = Flask(__name__)
+pomodoro.config['SECRET_KEY'] = 'C977F4FDFDD46C483B9B1596ED213'
 
 # Set up database and temporary data
 connection = sqlite3.connect('pomos.db')
@@ -29,10 +30,26 @@ def get_db_conn():
 
 # running
 
-@pomodoro.route('/', methods=['POST', 'GET'])
+@pomodoro.route('/', methods=('GET', 'POST'))
 def index():
     if request.method == 'POST':
-        task_content = request.form['content']
+        title = request.form['title']
+        content = request.form['content']
+        task_time = request.form['task_time']
+
+        if not title:
+            flash('Title is required!')
+        elif not content:
+            flash('Content is required!')
+        elif not task_time:
+            flash('Task time is required!')
+        else:
+            conn = get_db_conn()
+            conn.execute('INSERT INTO tasks (title, content, task_time) VALUES (?, ?, ?)',
+                         (title, content, task_time))
+            conn.commit()
+            conn.close()
+            return redirect(url_for('index'))
 
     else:
         conn = get_db_conn()
