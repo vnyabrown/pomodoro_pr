@@ -4,37 +4,30 @@ from flask import Flask, render_template, url_for, current_app, g, request
 
 pomodoro = Flask(__name__)
 
-# Function to set up database
-def get_db():
-    if 'db' not in g:
-        g.db = sqlite3.connect(
-        current_app.config['POMODORO_DATABASE'], 
-        detect_types=sqlite3.PARSE_DECLTYPES
-    )
-    g.db.row_factory = sqlite3.Row
+# Set up database and temporary data
+connection = sqlite3.connect('pomos.db')
 
-    return g.db
+with open('testdb.sql') as f:
+    connection.executescript(f.read()) # run our initial sql file
 
-# Function to close database
-def close_db():
-    db = g.pop('db', None)
-    if db is not None:
-        db.close()
+cur = connection.cursor() # create a cursor to use w/ db connection
 
-class task:
-    def init_db():
-        db = get_db()
-        id = db.column(db.Integer, primary_key=True)
-        content = db.column(db.String(200), nullable=False)
-        completed = db.column(db.Integer, default = 0)
-        date_created = db.column(db.DateTime, default=datetime.utcnow)
+# put initial data for testing
+cur.execute("INSERT INTO tasks (title, content) VALUES (?, ?)",
+            ('Test Task 1', 'help')
+            )
+cur.execute("INSERT INTO tasks (title, content) VALUES (?, ?)",
+            ("Test Task 2", 'help please')
+            )
+connection.commit()
+connection.close()
 
-        with current_app.open_recourse('testdb.sql') as f:
-            db.executescript(f.read().decode('utf8'))
+def get_db_conn():
+    conn = sqlite3.connect('pomos.db')
+    conn.row_factory = sqlite3.Row
+    return conn
 
-        def __repr__(self):
-            return '<Task %r' % self.id
-
+# running
 
 @pomodoro.route('/', methods=['POST', 'GET'])
 def index():
@@ -42,6 +35,9 @@ def index():
         task_content = request.form['content']
 
     else:
+        conn = get_db_conn()
+        task = conn.execute('SELECT * FROM tasks').fetchall()
+        conn.close()
         return render_template('index.html')
     
 

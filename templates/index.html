@@ -14,6 +14,10 @@
     <table>
         <tr>
             <th>Task</th>
+                {% for tasks in task %}
+                    <p>{{ tasks['task_time'] }}</p>
+                    <p>{{ tasks['content'] }}</p>
+                {% endfor %}
             <th>Added</th>
             <th>Actions</th>
         </tr>
