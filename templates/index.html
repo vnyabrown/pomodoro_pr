@@ -15,8 +15,8 @@
         {% for task in tasks %}
                 <p>{{ task['title'] }} <br/>{{ task['content'] }} <br/> {{ task['task_time'] }}</p>
                 <div class ="action">
-                    <a href="">Delete</a> <br/>
-                    <a href="">Update</a>
+                    <a href="">Start</a> <a href="">Delete</a> <br/>
+                    <a href="">Stop</a> <a href="">Update</a>
                     <br/>
                 </div> <!--end of action-->
         {% endfor %}
@@ -26,6 +26,7 @@
     <div class ="buttons">
         <form action="/" method="POST">
             <input type="text" name="content">
+            <p> <textarea name="description" rows="5" cols="14">What is your task?</textarea> </p>
             <input type="submit" value="Add Task">
         </form>
     </div> <!--end of buttons-->
