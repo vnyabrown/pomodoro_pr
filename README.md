@@ -31,19 +31,19 @@ Session History (Time per day, time per week, time per month) <br/>
 **Pomodoro Session**
 ID (Integer) (Auto generated)<br/>
 User (Foreign Key: User ID) <br/>
-Task Name (Text) <br/>
+Task Title (Text) <br/>
 Task Description (Text)<br/>
-Target Session Number (Integer)<br/>
-Completed Session Number (Integer)<br/>
-Time Elapsed (Double)<br/>
+Task Time (Number of Pomodoros) (Integer)<br/>
+Task Completion Time (Number of Pomodoros)<br/>
+Task Total Time Elapsed (Real)<br/>
 Status (Uncomplete/Complete - Default: Complete)<br/>
 
 **Pomodoro Session Template**
 ID (Integer) (Auto generated)<br/>
 User (Foreign Key: User ID)<br/>
-Task Name (Text)<br/>
+Task Title (Text)<br/>
 Task Description (Text)<br/>
-Target Session Number (Integer) <br/>
+Task Time (Number of Pomodoros) (Integer) <br/>
 
 ### Tools / Stack
 **Framework:** Flask<br/>
