@@ -13,11 +13,11 @@ with open('testdb.sql') as f:
 cur = connection.cursor() # create a cursor to use w/ db connection
 
 # put initial data for testing
-cur.execute("INSERT INTO tasks (title, content) VALUES (?, ?)",
-            ('Test Task 1', 'help')
+cur.execute("INSERT INTO tasks (title, content, task_time) VALUES (?, ?, ?)",
+            ('Test Task 1', 'This is a test!', '30')
             )
-cur.execute("INSERT INTO tasks (title, content) VALUES (?, ?)",
-            ("Test Task 2", 'help please')
+cur.execute("INSERT INTO tasks (title, content, task_time) VALUES (?, ?, ?)",
+            ("Test Task 2", 'This is another test!', '30')
             )
 connection.commit()
 connection.close()
@@ -36,9 +36,9 @@ def index():
 
     else:
         conn = get_db_conn()
-        task = conn.execute('SELECT * FROM tasks').fetchall()
+        tasks = conn.execute('SELECT * FROM tasks').fetchall()
         conn.close()
-        return render_template('index.html')
+        return render_template('index.html', tasks=tasks)
     
 
 if __name__ == "__main__":
