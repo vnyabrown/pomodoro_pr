@@ -1,5 +1,5 @@
 # Pomodoro-Project
-Personal Dev Project Winter 2023
+Personal Dev Project Winter 2024
 
 This project…Is to create a pomodoro app with the main functionalities: a functional pomodoro timer allowing for 25 minute sessions, 5 minute short breaks, and 10-30 minute long breaks; assigning tasks for each set of sessions, the user can decide how many sessions they want/need for that task and adjust the needed number of sessions it as they please, the user can save a template with a session they previously created, the user can view analytics about their time using the app (how much time focused in a day? Week? month?) and the user can schedule regular sessions for upcoming days up to a month.
 
